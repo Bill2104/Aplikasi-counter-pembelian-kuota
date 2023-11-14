@@ -1,0 +1,108 @@
+def select(operator, kuota, price):
+    paket = ""
+    harga_kuota = 0  
+
+    if operator == "indosat":
+        if kuota == "3gb":
+            harga_kuota = 25000
+            paket = "Indosat 3GB"
+        elif kuota == "5gb":
+            harga_kuota = 30000
+            paket = "Indosat 5GB"
+        elif kuota == "7gb":
+            harga_kuota = 50000
+            paket = "Indosat 7GB"
+        elif kuota == "10gb":
+            harga_kuota = 100000
+            paket = "Indosat 10GB"
+        else:
+            print("kuota tidak ada")
+    elif operator == "telkomsel":
+        if kuota == "3gb":
+            harga_kuota = 35000
+            paket = "Telkomsel 3GB"
+        elif kuota == "5gb":
+            harga_kuota = 40000
+            paket = "Telkomsel 5GB"
+        elif kuota == "7gb":
+            harga_kuota = 60000
+            paket = "Telkomsel 7GB"
+        elif kuota == "10gb":
+            harga_kuota = 120000
+            paket = "Telkomsel 10GB"
+        else:
+            print("kuota tidak ada")
+    elif operator == "xl":
+        if kuota == "3gb":
+            harga_kuota = 35000
+            paket = "XL 3GB"
+        elif kuota == "5gb":
+            harga_kuota = 40000
+            paket = "XL 5GB"
+        elif kuota == "7gb":
+            harga_kuota = 60000
+            paket = "XL 7GB"
+        elif kuota == "10gb":
+            harga_kuota = 120000
+            paket = "XL 10GB"
+        else:
+            print("kuota tidak ada")
+    else:
+        print("Paket tidak ada, silahkan masukkan operator kembali")
+        return None
+    
+    harga_bayar = harga_kuota
+    total_kembalian = bayar - harga_kuota
+    return {"operator": operator, "paket": paket, "harga_bayar": harga_bayar}
+
+def print_nota(transaksi_list, total_pembayaran, bayar):
+    print("========== Nota Transaksi ==========")
+    total_kembalian = bayar - total_pembayaran
+
+    for transaksi in transaksi_list:
+        print(f"Operator: {transaksi['operator']}, Paket: {transaksi['paket']}")
+        print(f" Harga Bayar: {transaksi['harga_bayar']}")
+    print("-" * 30)
+    print(f"Total Pembayaran: {total_pembayaran}")
+    print(f"Nominal         : {bayar}")
+    print(f"Total Kembalian : {total_kembalian}")
+    print("Terima kasih telah berbelanja di Konter Anyar!")
+
+transaksi_list = []
+total_pembayaran = 0
+
+
+print("=================== Konter Anyar ===================")
+print("========== Selamat datang di Konter Anyar===========")
+print("""Jl. Pala barat 1 lurus ke utara, balik ke selatan,
+            no 1015 Kramat kab. Tegal""")
+print("-" * 53)
+print("""Kuota :
+      Indosat :                   Telkomsel :
+      3GB harga  = 25000          3GB harga = 35000
+      5GB harga  = 30000          5GB harga = 40000
+      7GB harga  = 50000          7GB harga = 60000   
+     10GB harga  = 100000        10GB harga = 120000
+     
+     XL :
+     3GB harga   = 35000
+     5GB harga   = 40000
+     7GB harga   = 60000
+    10GB harga   = 120000
+     """)           
+nomor_hp = input("Masukkan nomor hp : ")
+bayar = int(input("Masukkan nominal bayar : "))
+while True:
+    operator = input("Masukkan operator : ")
+    kuota = input("Masukkan jumlah kuota : ")
+
+    transaksi = select(operator, kuota, bayar)
+    if transaksi:
+        transaksi_list.append(transaksi)
+        total_pembayaran += transaksi['harga_bayar']
+
+    stop = input("Apakah ingin membeli lagi? (yes/no) ")
+    if stop.lower() == "no" or stop.lower() == "n":
+        break
+
+print_nota(transaksi_list, total_pembayaran, bayar)
